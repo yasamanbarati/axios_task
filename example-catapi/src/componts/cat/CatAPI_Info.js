@@ -12,7 +12,7 @@ const CatAPI_Info = () => {
         .then((res) =>{
             setFactData(res.data.fact);
             setLengthData(res.data.length);
-        });
+        }); 
     };
 
     return (
