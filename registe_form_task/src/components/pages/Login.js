@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
-import "./style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "./style.css";
 
 // Data
 const data = [
@@ -11,7 +11,7 @@ const data = [
     },
     {
         email: 'admin1@gmail.com',
-        password: '88888888'
+        password: '2856'
     },
 ]
 
@@ -38,12 +38,14 @@ const Login = () => {
 
         //     setData(result.data.data);
 
-            if (email.trim().length === 0 || password.trim().length === 0) {
+            if (email.trim().length === 0 || password.trim().length === 0 ) {
                 alert('ایمیل و پسورد را وارد کنید')
             } else {
                 const result = data.some((item) => item.email === email && item.password === password)
-
-                if (result) {
+                if (password.trim().length < 8){
+                    alert('پسورد را به درستی وارد کنید!!( پسورد 8 رقمی میباشد )')
+                    }
+                else if (result) {
                     alert('خوش آمدید')
                 } else {
                     alert('لطفا اطلاعات را بررسی کنید')
