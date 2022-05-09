@@ -1,15 +1,16 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./style.css";
 
 // Data
 const data = [
     {
+        id: 1,
         email: 'admin@gmail.com',
         password: '12345678'
     },
     {
+        id: 2,
         email: 'admin1@gmail.com',
         password: '2856'
     },
@@ -38,13 +39,13 @@ const Login = () => {
 
         //     setData(result.data.data);
 
-            if (email.trim().length === 0 || password.trim().length === 0 ) {
+            if (email.trim().length === 0 || password.trim().length === 0) {
                 alert('ایمیل و پسورد را وارد کنید')
             } else {
                 const result = data.some((item) => item.email === email && item.password === password)
-                if (password.trim().length < 8){
+                if (password.trim().length > 8) {
                     alert('پسورد را به درستی وارد کنید!!( پسورد 8 رقمی میباشد )')
-                    }
+                }
                 else if (result) {
                     alert('خوش آمدید')
                 } else {
@@ -60,7 +61,7 @@ const Login = () => {
         <Fragment>
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-5 form-block">
+                    <div className="col-lg-6 col-md-8 col-sm-10 col-10 form-block">
                         <div className="form-box p-4 row justify-content-center align-items-center">
                             <h4 className="text-center mb-4">
                                 Login into account
@@ -76,6 +77,7 @@ const Login = () => {
                                         onChange={(e) => { setEmail(e.target.value) }}
                                         tabIndex={10}
                                         required />
+
                                 </div>
                                 <div className="form-input">
                                     <span><i className="fa fa-key" /></span>
@@ -91,9 +93,9 @@ const Login = () => {
                                         Login
                                     </button>
                                 </div>
-                                <div className="text-right mt-4 mb-2">
-                                    <Link to="/Register" className="forget-link">Forgot password?</Link>
-                                </div>
+                                    <div className="text-right mt-4 mb-2">
+                                        <Link to="/Register" className="forget-link">Forgot password?</Link>
+                                    </div>
                                 <div className="text-right mb-3">
                                     Don't have an account?
                                     <Link to="/Sign_Up" className="register-link">Sign Up</Link>

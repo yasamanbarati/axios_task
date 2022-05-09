@@ -43,7 +43,7 @@ const SignUp = () => {
         <Fragment>
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-5 form-block">
+                    <div className="col-lg-6 col-md-8 col-sm-10 col-10 form-block">
                         <div className="form-box p-4 row justify-content-center align-items-center">
                             <h4 className="text-center mb-4">
                                 Create an account

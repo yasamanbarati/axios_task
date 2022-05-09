@@ -2,7 +2,7 @@
   "data": [
     {
       "id": 1,
-      "name": "parmida",
+      "fullName": "parmida",
       "email": "yasamanbratybarati@gmail.com",
       "password": "p13811401"
     },
@@ -11,6 +11,12 @@
       "email": "yasamanbarati81@gmail.com",
       "password": "yas28561423",
       "id": 2
+    },
+    {
+      "fullName": "admin",
+      "email": "admin81@gmail.com",
+      "password": "admin81",
+      "id": 3
     }
   ]
 }
