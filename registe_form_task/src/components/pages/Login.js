@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Fragment, useState , useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./style.css";
+import validator from 'validator';
 
 
 const Login = () => {
@@ -11,6 +11,18 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [data, setData] = useState([]);
+    const [emailError, setEmailError] = useState('')
+
+    //Email confirmation
+    const validateEmail = (e) => {
+        var email = e.target.value
+
+        if (validator.isEmail(email)) {
+            setEmailError('Valid Email :)')
+        } else {
+            setEmailError('Enter valid Email!')
+        }
+    }
 
     // Get Data
     const getUserData = () => {
@@ -51,7 +63,11 @@ const Login = () => {
             }
         }
     }
-
+    
+    const handleChangeEmail = (e) => {
+        validateEmail(e);
+        setEmail(e.target.value);
+    }
     return (
         <Fragment>
             <div className="container">
@@ -69,10 +85,10 @@ const Login = () => {
                                         placeholder="Email Address"
                                         autoComplete="off"
                                         value={email}
-                                        onChange={(e) => { setEmail(e.target.value) }}
+                                        onChange={handleChangeEmail}
                                         tabIndex={10}
                                         required />
-
+                                        <span className="emaillError">{emailError}</span>
                                 </div>
                                 <div className="form-input">
                                     <span><i className="fa fa-key" /></span>

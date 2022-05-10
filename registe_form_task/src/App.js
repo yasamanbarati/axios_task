@@ -1,8 +1,10 @@
 import { Fragment } from 'react';
 import {Routes ,Route} from 'react-router-dom';
+import './components/pages/style.css'
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 import Register from './components/pages/Register';
+
 
 function App() {
   return (

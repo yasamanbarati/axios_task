@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import validator from 'validator'
 
 const SignUp = () => {
 
@@ -9,33 +10,46 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [emailError, setEmailError] = useState('')
 
-    const handleSubmit = () =>{
+    //Email confirmation
+    const validateEmail = (e) => {
+        var email = e.target.value
+
+        if (validator.isEmail(email)) {
+            setEmailError('Valid Email :)')
+        } else {
+            setEmailError('Enter valid Email!')
+        }
+    }
+
+    const handleSubmit = () => {
         setLoading(true);
         setIsError(false);
-        const data ={
-            fullName : fullName,
-            email : email,
-            password : password
+        const data = {
+            fullName: fullName,
+            email: email,
+            password: password
         }
-        axios.post('http://localhost:5000/data', data).then(result =>{
+        axios.post('http://localhost:5000/data', data).then(result => {
             setFullName('');
             setEmail('');
             setPassword('');
             setLoading(false);
             alert('ثبت با موفقیت انجام شد')
-        }).catch( error => {
+        }).catch(error => {
             setLoading(false);
             setIsError(true);
         });
     }
-    const handleChangeName = (e) =>{
+    const handleChangeName = (e) => {
         setFullName(e.target.value);
     }
-    const handleChangeEmail = (e) =>{
+    const handleChangeEmail = (e) => {
+        validateEmail(e);
         setEmail(e.target.value);
     }
-    const handleChangePass = (e) =>{
+    const handleChangePass = (e) => {
         setPassword(e.target.value);
     }
 
@@ -56,6 +70,7 @@ const SignUp = () => {
                                 <div className="form-input">
                                     <span><i className="fa fa-envelope-o" /></span>
                                     <input type="email" placeholder="Email Address" value={email} onChange={handleChangeEmail} required />
+                                    <span className="emaillError">{emailError}</span>
                                 </div>
                                 <div className="form-input">
                                     <span><i className="fa fa-key" /></span>
@@ -67,7 +82,7 @@ const SignUp = () => {
                                     </button>
                                 </div>
                                 <div className="text-right mb-5">
-                                    Already have an account 
+                                    Already have an account
                                     <Link to="/" className="login-link" > Login here</Link>
                                 </div>
                             </form>

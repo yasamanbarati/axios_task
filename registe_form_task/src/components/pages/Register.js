@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { Fragment, useState , useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import validator from 'validator';
 
 const Register = () => {
-    
+
     // state
     const [email, setEmail] = useState('');
     const [password, setpassword] = useState('');
@@ -12,21 +13,33 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState(null);
+    const [emailError, setEmailError] = useState('')
+
+    //Email confirmation
+    const validateEmail = (e) => {
+        var email = e.target.value
+
+        if (validator.isEmail(email)) {
+            setEmailError('Valid Email :)')
+        } else {
+            setEmailError('Enter valid Email!')
+        }
+    }
 
     // Get Data (email)
     const getUserData = () => {
         axios.get('http://localhost:5000/data')
-        .then(response => {
-            setData(response.data)
-        }).catch(err => {
-            console.log(err);
-        })
+            .then(response => {
+                setData(response.data)
+            }).catch(err => {
+                console.log(err);
+            })
     }
-    
+
     useEffect(() => {
         getUserData()
     }, [])
-    
+
     //sent and update Data
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,18 +50,18 @@ const Register = () => {
         const user = {
             email: email,
             password: password,
-            password1 : password
+            password1: password
         }
-        if( email.trim().length === 0 || password.trim().length === 0 || password1.trim().length === 0){
+        if (email.trim().length === 0 || password.trim().length === 0 || password1.trim().length === 0) {
             alert('ایمیل و پسورد را وارد کنید')
         }
-        else if (password.trim().length < 8 || password1.trim().length < 8 ){
+        else if (password.trim().length < 8 || password1.trim().length < 8) {
             alert('پسورد را به درستی وارد کنید!!( پسورد 8 رقمی میباشد )')
         }
         else {
             const result = data.some((item) => item.email === email)
 
-            if (result){
+            if (result) {
                 axios.put('http://localhost:5000/data', user).then(res => {
                     setData(res.data);
                     setpassword(res.password);
@@ -57,7 +70,7 @@ const Register = () => {
                         setLoading(false);
                         alert("رمز عبور شما با موفقیت تغییر یافت");
                     }
-                    else{
+                    else {
                         clearPutOutput();
                     }
                 }).catch(err => {
@@ -65,8 +78,13 @@ const Register = () => {
                     setIsError(true);
                 })
             }
-            
+
         }
+    }
+
+    const handleChangeEmail = (e) => {
+        validateEmail(e);
+        setEmail(e.target.value);
     }
 
     const clearPutOutput = () => { setEmail(null); };
@@ -83,7 +101,8 @@ const Register = () => {
                                     <div className="form-input">
                                         <label className="ps-1 mb-2">Email :</label>
                                         <input type="email" placeholder="Email Address" value={email}
-                                        onChange={(e) => { setEmail(e.target.value) }} required />
+                                            onChange={handleChangeEmail} required />
+                                        <span className="emaillError">{emailError}</span>
                                     </div>
                                     <div className="form-input">
                                         <label className="ps-1 mb-2">new password :</label>
