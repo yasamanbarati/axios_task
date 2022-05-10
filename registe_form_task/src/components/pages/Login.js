@@ -1,20 +1,8 @@
-import React, { Fragment, useState } from "react";
+import axios from "axios";
+import React, { Fragment, useState , useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-// Data
-const data = [
-    {
-        id: 1,
-        email: 'admin@gmail.com',
-        password: '12345678'
-    },
-    {
-        id: 2,
-        email: 'admin1@gmail.com',
-        password: '2856'
-    },
-]
 
 const Login = () => {
 
@@ -22,8 +10,22 @@ const Login = () => {
     // State 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
 
+    // Get Data
+    const getUserData = () => {
+        axios.get('http://localhost:5000/data')
+        .then(response => {
+            setData(response.data)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    useEffect(() => {
+        getUserData()
+    }, [])
+    
     // Send Data
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,28 +35,21 @@ const Login = () => {
             password: password
         }
 
-        console.log(user);
-
-        // axios.get('http://localhost:5000/data').then(result => {
-
-        //     setData(result.data.data);
-
-            if (email.trim().length === 0 || password.trim().length === 0) {
-                alert('ایمیل و پسورد را وارد کنید')
+        if( email.trim().length === 0 || password.trim().length === 0 ){
+            alert('ایمیل و پسورد را وارد کنید')
+        }
+        else if (password.trim().length < 8 ){
+            alert('پسورد را به درستی وارد کنید!!( پسورد 8 رقمی میباشد )')
+        }
+        else {
+            const result = data.some((item) => item.email === email && item.password === password)
+            
+            if (result) {
+                alert('خوش آمدید')
             } else {
-                const result = data.some((item) => item.email === email && item.password === password)
-                if (password.trim().length > 8) {
-                    alert('پسورد را به درستی وارد کنید!!( پسورد 8 رقمی میباشد )')
-                }
-                else if (result) {
-                    alert('خوش آمدید')
-                } else {
-                    alert('لطفا اطلاعات را بررسی کنید')
-                }
+                alert('لطفا اطلاعات را بررسی کنید')
             }
-        // }).catch(err => {
-        //     console.log(err);
-        // })
+        }
     }
 
     return (
