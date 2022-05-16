@@ -26,9 +26,10 @@ const Login = () => {
 
     // Get Data
     const getUserData = () => {
-        axios.get('http://localhost:5000/data')
+        axios.get('https://yasamanproject-8481b-default-rtdb.firebaseio.com/')
         .then(response => {
             setData(response.data)
+            console.log(response);
         }).catch(err => {
             console.log(err);
         })

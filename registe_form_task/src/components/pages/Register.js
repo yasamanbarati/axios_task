@@ -11,7 +11,6 @@ const Register = () => {
     const [password1, setpassword1] = useState('');
 
     const [loading, setLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
     const [data, setData] = useState(null);
     const [emailError, setEmailError] = useState('')
 
@@ -45,7 +44,6 @@ const Register = () => {
         e.preventDefault();
 
         setLoading(true);
-        setIsError(false);
 
         const user = {
             email: email,
@@ -74,8 +72,10 @@ const Register = () => {
                         clearPutOutput();
                     }
                 }).catch(err => {
+                    console.error(err);
+                })
+                .finally(()=>{
                     setLoading(false);
-                    setIsError(true);
                 })
             }
 

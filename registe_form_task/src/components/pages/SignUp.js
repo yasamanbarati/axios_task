@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import validator from 'validator'
+import validator from 'validator';
 
 const SignUp = () => {
 
